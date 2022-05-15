@@ -1,0 +1,352 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="19455" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="hbQ-vS-kwA">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="19454"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <scenes>
+        <!--Start View Controller-->
+        <scene sceneID="tne-QT-ifu">
+            <objects>
+                <viewController storyboardIdentifier="StartViewController" id="BYZ-38-t0r" customClass="StartViewController" customModule="Millionaire" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC" customClass="GradientView" customModule="Millionaire" customModuleProvider="target">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="IXJ-30-tOO">
+                                <rect key="frame" x="128" y="406" width="158" height="84"/>
+                                <subviews>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="rwX-8e-zzd">
+                                        <rect key="frame" x="0.0" y="0.0" width="158" height="42"/>
+                                        <state key="normal" title="Button"/>
+                                        <buttonConfiguration key="configuration" style="plain" title="Играть">
+                                            <fontDescription key="titleFontDescription" name="Helvetica" family="Helvetica" pointSize="24"/>
+                                            <color key="baseForegroundColor" systemColor="systemGray4Color"/>
+                                        </buttonConfiguration>
+                                        <connections>
+                                            <segue destination="VQ3-Fk-eb9" kind="show" id="jeP-aw-XZ8"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="REK-y0-Fyq">
+                                        <rect key="frame" x="0.0" y="42" width="158" height="42"/>
+                                        <state key="normal" title="Button"/>
+                                        <buttonConfiguration key="configuration" style="plain" title="Результаты">
+                                            <fontDescription key="titleFontDescription" name="Helvetica" family="Helvetica" pointSize="24"/>
+                                            <color key="baseForegroundColor" systemColor="systemGray4Color"/>
+                                        </buttonConfiguration>
+                                        <connections>
+                                            <segue destination="VeY-tN-fn1" kind="show" id="eiw-53-Hfe"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
+                            </stackView>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="IXJ-30-tOO" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" id="2if-Ez-hDD"/>
+                            <constraint firstItem="IXJ-30-tOO" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="k5Q-cw-hQW"/>
+                        </constraints>
+                        <userDefinedRuntimeAttributes>
+                            <userDefinedRuntimeAttribute type="color" keyPath="startColor">
+                                <color key="value" systemColor="systemBrownColor"/>
+                            </userDefinedRuntimeAttribute>
+                            <userDefinedRuntimeAttribute type="color" keyPath="endColor">
+                                <color key="value" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            </userDefinedRuntimeAttribute>
+                            <userDefinedRuntimeAttribute type="number" keyPath="startLocation">
+                                <real key="value" value="0.0"/>
+                            </userDefinedRuntimeAttribute>
+                            <userDefinedRuntimeAttribute type="number" keyPath="endLocation">
+                                <real key="value" value="1"/>
+                            </userDefinedRuntimeAttribute>
+                            <userDefinedRuntimeAttribute type="point" keyPath="startPoint">
+                                <point key="value" x="1" y="0.0"/>
+                            </userDefinedRuntimeAttribute>
+                            <userDefinedRuntimeAttribute type="point" keyPath="endPoint">
+                                <point key="value" x="0.0" y="1"/>
+                            </userDefinedRuntimeAttribute>
+                        </userDefinedRuntimeAttributes>
+                    </view>
+                    <navigationItem key="navigationItem" id="AlX-Y9-rbR"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1855.072463768116" y="97.767857142857139"/>
+        </scene>
+        <!--RecordsVC-->
+        <scene sceneID="SxI-1O-DAH">
+            <objects>
+                <viewController id="VeY-tN-fn1" customClass="RecordsVC" customModule="Millionaire" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="qrd-7U-XID" customClass="GradientView" customModule="Millionaire" customModuleProvider="target">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="lE1-AC-akz">
+                                <rect key="frame" x="0.0" y="88" width="414" height="774"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                <prototypes>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="RecordCell" textLabel="Z2t-Li-cBu" detailTextLabel="JUI-QK-H29" style="IBUITableViewCellStyleValue1" id="xE8-Nl-rBx">
+                                        <rect key="frame" x="0.0" y="44.5" width="414" height="43.5"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="xE8-Nl-rBx" id="dmB-9u-d7C">
+                                            <rect key="frame" x="0.0" y="0.0" width="414" height="43.5"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" insetsLayoutMarginsFromSafeArea="NO" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="Z2t-Li-cBu">
+                                                    <rect key="frame" x="20" y="15" width="25" height="14.5"/>
+                                                    <autoresizingMask key="autoresizingMask"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="0.0"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" insetsLayoutMarginsFromSafeArea="NO" text="Detail" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="JUI-QK-H29">
+                                                    <rect key="frame" x="361" y="15" width="33" height="14.5"/>
+                                                    <autoresizingMask key="autoresizingMask"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="0.0"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
+                                </prototypes>
+                                <sections/>
+                            </tableView>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="lUe-Eo-qkw"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="lUe-Eo-qkw" firstAttribute="trailing" secondItem="lE1-AC-akz" secondAttribute="trailing" id="bva-N8-IUT"/>
+                            <constraint firstItem="lE1-AC-akz" firstAttribute="top" secondItem="lUe-Eo-qkw" secondAttribute="top" id="eWG-AI-aCM"/>
+                            <constraint firstItem="lUe-Eo-qkw" firstAttribute="bottom" secondItem="lE1-AC-akz" secondAttribute="bottom" id="sZ3-Au-RyH"/>
+                            <constraint firstItem="lE1-AC-akz" firstAttribute="leading" secondItem="lUe-Eo-qkw" secondAttribute="leading" id="sl2-5c-Nrg"/>
+                        </constraints>
+                        <userDefinedRuntimeAttributes>
+                            <userDefinedRuntimeAttribute type="color" keyPath="startColor">
+                                <color key="value" systemColor="systemBrownColor"/>
+                            </userDefinedRuntimeAttribute>
+                            <userDefinedRuntimeAttribute type="color" keyPath="endColor">
+                                <color key="value" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            </userDefinedRuntimeAttribute>
+                            <userDefinedRuntimeAttribute type="number" keyPath="startLocation">
+                                <real key="value" value="0.0"/>
+                            </userDefinedRuntimeAttribute>
+                            <userDefinedRuntimeAttribute type="number" keyPath="endLocation">
+                                <real key="value" value="1"/>
+                            </userDefinedRuntimeAttribute>
+                            <userDefinedRuntimeAttribute type="point" keyPath="startPoint">
+                                <point key="value" x="0.0" y="0.0"/>
+                            </userDefinedRuntimeAttribute>
+                            <userDefinedRuntimeAttribute type="point" keyPath="endPoint">
+                                <point key="value" x="1" y="1"/>
+                            </userDefinedRuntimeAttribute>
+                        </userDefinedRuntimeAttributes>
+                    </view>
+                    <navigationItem key="navigationItem" id="TF7-PL-yHQ"/>
+                    <connections>
+                        <outlet property="tableView" destination="lE1-AC-akz" id="pG5-vu-8kF"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="bzE-Na-GTw" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="3017.3913043478265" y="652.90178571428567"/>
+        </scene>
+        <!--GameVC-->
+        <scene sceneID="ivb-kc-upv">
+            <objects>
+                <viewController id="VQ3-Fk-eb9" customClass="GameVC" customModule="Millionaire" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="ned-PC-INK" customClass="GradientView" customModule="Millionaire" customModuleProvider="target">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="DfC-gx-KWk">
+                                <rect key="frame" x="50" y="344" width="79" height="36"/>
+                                <state key="normal" title="Button"/>
+                                <buttonConfiguration key="configuration" style="plain">
+                                    <attributedString key="attributedTitle">
+                                        <fragment content="Button">
+                                            <attributes>
+                                                <font key="NSFont" size="19" name="Helvetica"/>
+                                            </attributes>
+                                        </fragment>
+                                    </attributedString>
+                                    <color key="baseForegroundColor" systemColor="systemGray4Color"/>
+                                </buttonConfiguration>
+                                <connections>
+                                    <action selector="checkAnswer:" destination="VQ3-Fk-eb9" eventType="touchUpInside" id="qtu-AX-7pp"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Fbg-Ro-aXU">
+                                <rect key="frame" x="199" y="344" width="79" height="36"/>
+                                <state key="normal" title="Button"/>
+                                <buttonConfiguration key="configuration" style="plain">
+                                    <attributedString key="attributedTitle">
+                                        <fragment content="Button">
+                                            <attributes>
+                                                <font key="NSFont" size="19" name="Helvetica"/>
+                                            </attributes>
+                                        </fragment>
+                                    </attributedString>
+                                    <color key="baseForegroundColor" systemColor="systemGray4Color"/>
+                                </buttonConfiguration>
+                                <connections>
+                                    <action selector="checkAnswer:" destination="VQ3-Fk-eb9" eventType="touchUpInside" id="lKs-QJ-oFv"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="U8F-0W-X9y">
+                                <rect key="frame" x="50" y="430" width="79" height="36"/>
+                                <state key="normal" title="Button"/>
+                                <buttonConfiguration key="configuration" style="plain">
+                                    <attributedString key="attributedTitle">
+                                        <fragment content="Button">
+                                            <attributes>
+                                                <font key="NSFont" size="19" name="Helvetica"/>
+                                            </attributes>
+                                        </fragment>
+                                    </attributedString>
+                                    <color key="baseForegroundColor" systemColor="systemGray4Color"/>
+                                </buttonConfiguration>
+                                <connections>
+                                    <action selector="checkAnswer:" destination="VQ3-Fk-eb9" eventType="touchUpInside" id="zdH-fH-xRN"/>
+                                </connections>
+                            </button>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="10" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ZdG-4W-mqP">
+                                <rect key="frame" x="10" y="691.5" width="394" height="20.5"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="UEd-3D-sX0">
+                                <rect key="frame" x="20" y="797" width="374" height="31"/>
+                                <state key="normal" title="Button"/>
+                                <buttonConfiguration key="configuration" style="plain" title="50/50">
+                                    <color key="baseForegroundColor" systemColor="systemGray4Color"/>
+                                </buttonConfiguration>
+                                <connections>
+                                    <action selector="didHelp:" destination="VQ3-Fk-eb9" eventType="touchUpInside" id="TVz-af-DYU"/>
+                                </connections>
+                            </button>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="0$" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="pNm-Db-gFZ">
+                                <rect key="frame" x="20" y="168" width="374" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="cuk-0p-Iai">
+                                <rect key="frame" x="199" y="430" width="79" height="36"/>
+                                <state key="normal" title="Button"/>
+                                <buttonConfiguration key="configuration" style="plain">
+                                    <attributedString key="attributedTitle">
+                                        <fragment content="Button">
+                                            <attributes>
+                                                <font key="NSFont" size="19" name="Helvetica"/>
+                                            </attributes>
+                                        </fragment>
+                                    </attributedString>
+                                    <color key="baseForegroundColor" systemColor="systemGray4Color"/>
+                                </buttonConfiguration>
+                                <connections>
+                                    <action selector="checkAnswer:" destination="VQ3-Fk-eb9" eventType="touchUpInside" id="SJG-5R-qDS"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="wmW-8N-Ifo"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="U8F-0W-X9y" firstAttribute="top" secondItem="DfC-gx-KWk" secondAttribute="bottom" constant="50" id="1Lm-rI-NNI"/>
+                            <constraint firstItem="ZdG-4W-mqP" firstAttribute="leading" secondItem="wmW-8N-Ifo" secondAttribute="leading" constant="10" id="213-Ec-vet"/>
+                            <constraint firstItem="U8F-0W-X9y" firstAttribute="leading" secondItem="DfC-gx-KWk" secondAttribute="leading" id="3dr-gQ-iTv"/>
+                            <constraint firstItem="UEd-3D-sX0" firstAttribute="leading" secondItem="wmW-8N-Ifo" secondAttribute="leading" constant="20" id="De4-N0-3ez"/>
+                            <constraint firstItem="cuk-0p-Iai" firstAttribute="leading" secondItem="U8F-0W-X9y" secondAttribute="trailing" constant="70" id="FPZ-YW-f4Q"/>
+                            <constraint firstItem="DfC-gx-KWk" firstAttribute="leading" secondItem="wmW-8N-Ifo" secondAttribute="leading" constant="50" id="HD4-oY-u8R"/>
+                            <constraint firstItem="wmW-8N-Ifo" firstAttribute="trailing" secondItem="ZdG-4W-mqP" secondAttribute="trailing" constant="10" id="HVW-td-Maq"/>
+                            <constraint firstItem="cuk-0p-Iai" firstAttribute="top" secondItem="Fbg-Ro-aXU" secondAttribute="bottom" constant="50" id="MXZ-fB-gca"/>
+                            <constraint firstItem="wmW-8N-Ifo" firstAttribute="trailing" secondItem="pNm-Db-gFZ" secondAttribute="trailing" constant="20" id="PG7-zI-gBS"/>
+                            <constraint firstItem="wmW-8N-Ifo" firstAttribute="trailing" secondItem="UEd-3D-sX0" secondAttribute="trailing" constant="20" id="bkz-sF-FiO"/>
+                            <constraint firstItem="pNm-Db-gFZ" firstAttribute="leading" secondItem="wmW-8N-Ifo" secondAttribute="leading" constant="20" id="eYn-vt-KEk"/>
+                            <constraint firstItem="wmW-8N-Ifo" firstAttribute="bottom" secondItem="ZdG-4W-mqP" secondAttribute="bottom" constant="150" id="fvu-gv-k9p"/>
+                            <constraint firstItem="UEd-3D-sX0" firstAttribute="top" secondItem="ZdG-4W-mqP" secondAttribute="bottom" constant="85" id="hta-Ru-vUb"/>
+                            <constraint firstItem="pNm-Db-gFZ" firstAttribute="top" secondItem="wmW-8N-Ifo" secondAttribute="top" constant="80" id="iIp-Ol-BnI"/>
+                            <constraint firstItem="Fbg-Ro-aXU" firstAttribute="leading" secondItem="cuk-0p-Iai" secondAttribute="leading" id="oHI-ec-Hb8"/>
+                            <constraint firstItem="U8F-0W-X9y" firstAttribute="centerY" secondItem="ned-PC-INK" secondAttribute="centerY" id="s3Y-p9-gmz"/>
+                            <constraint firstItem="cuk-0p-Iai" firstAttribute="top" secondItem="U8F-0W-X9y" secondAttribute="top" id="wcX-bW-jBo"/>
+                        </constraints>
+                        <userDefinedRuntimeAttributes>
+                            <userDefinedRuntimeAttribute type="color" keyPath="startColor">
+                                <color key="value" systemColor="systemBrownColor"/>
+                            </userDefinedRuntimeAttribute>
+                            <userDefinedRuntimeAttribute type="color" keyPath="endColor">
+                                <color key="value" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            </userDefinedRuntimeAttribute>
+                            <userDefinedRuntimeAttribute type="number" keyPath="startLocation">
+                                <real key="value" value="0.0"/>
+                            </userDefinedRuntimeAttribute>
+                            <userDefinedRuntimeAttribute type="number" keyPath="endLocation">
+                                <real key="value" value="1"/>
+                            </userDefinedRuntimeAttribute>
+                            <userDefinedRuntimeAttribute type="point" keyPath="startPoint">
+                                <point key="value" x="0.0" y="0.0"/>
+                            </userDefinedRuntimeAttribute>
+                            <userDefinedRuntimeAttribute type="point" keyPath="endPoint">
+                                <point key="value" x="1" y="1"/>
+                            </userDefinedRuntimeAttribute>
+                        </userDefinedRuntimeAttributes>
+                    </view>
+                    <navigationItem key="navigationItem" id="wuK-ku-knZ">
+                        <barButtonItem key="leftBarButtonItem" title="End Game" id="Xkd-LK-UHE">
+                            <color key="tintColor" systemColor="systemGray4Color"/>
+                            <connections>
+                                <action selector="endGameBarButtonAction:" destination="VQ3-Fk-eb9" id="opH-lA-KSr"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
+                    <connections>
+                        <outlet property="Button1" destination="DfC-gx-KWk" id="5Ct-RO-oUk"/>
+                        <outlet property="Button2" destination="Fbg-Ro-aXU" id="2p9-wd-NMo"/>
+                        <outlet property="Button3" destination="U8F-0W-X9y" id="wAp-3C-Mi2"/>
+                        <outlet property="Button4" destination="cuk-0p-Iai" id="ERv-vH-znk"/>
+                        <outlet property="endGameButton" destination="Xkd-LK-UHE" id="g50-SE-UuP"/>
+                        <outlet property="helpButton" destination="UEd-3D-sX0" id="TUY-6S-D2v"/>
+                        <outlet property="prize" destination="pNm-Db-gFZ" id="BIe-gs-1ty"/>
+                        <outlet property="question" destination="ZdG-4W-mqP" id="7Gh-Uk-eLZ"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="pWu-97-CzV" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="3017.3913043478265" y="-198.21428571428569"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="xhK-8U-amU">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="hbQ-vS-kwA" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="PMo-9H-6YA">
+                        <rect key="frame" x="0.0" y="44" width="414" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="BYZ-38-t0r" kind="relationship" relationship="rootViewController" id="wsV-xI-3ww"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="HZ2-6e-zq4" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="944.92753623188412" y="97.767857142857139"/>
+        </scene>
+    </scenes>
+    <resources>
+        <systemColor name="systemBackgroundColor">
+            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+        <systemColor name="systemBrownColor">
+            <color red="0.63529411764705879" green="0.51764705882352946" blue="0.36862745098039218" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
+        <systemColor name="systemGray4Color">
+            <color red="0.81960784313725488" green="0.81960784313725488" blue="0.83921568627450982" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
+    </resources>
+</document>
