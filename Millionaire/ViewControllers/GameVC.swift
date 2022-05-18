@@ -51,20 +51,18 @@ class GameVC: UIViewController {
     var delegate: GameSession?
     
     @IBOutlet var prize: UILabel!
-    @IBOutlet var Button1: UIButton!
-    @IBOutlet var Button2: UIButton!
-    @IBOutlet var Button3: UIButton!
-    @IBOutlet var Button4: UIButton!
+    
+    @IBOutlet var questionBlocksStack: UIStackView!
+    @IBOutlet var secondButtonGroup: UIStackView!
+    @IBOutlet var firstButtonGroup: UIStackView!
+    
+    @IBOutlet var helpButtonStack: UIStackView!
+    
+    
     @IBOutlet var question: UILabel!
     @IBOutlet var endGameButton: UIBarButtonItem!
-    @IBOutlet var helpButton: UIButton!
     
-    @IBAction func didHelp(_ sender: UIButton) {
-        questions[currentQuestion].removeTwoIncorrectAnswer()
-        doSet(index: currentQuestion)
-        Game.shared.gameSession?.didRemoveTwoIncorrectAnswer = true
-        sender.isHidden = true
-    }
+    
     
     
     @IBAction func endGameBarButtonAction(_ sender: Any) {
@@ -86,7 +84,26 @@ class GameVC: UIViewController {
         } else {
             endGame()
         }
+    }
+    
+    @IBAction func didPressedHelpButton(_ sender: CustomUIButton) {
+        sender.layer.opacity = 0.2
+        if (!sender.didTap) {
+            switch sender.id {
+            case 1:
+                questions[currentQuestion].removeTwoIncorrectAnswer()
+                doSet(index: currentQuestion)
+                Game.shared.gameSession?.didRemoveTwoIncorrectAnswer = true
+            case 2:
+                print(2)
+            case 3:
+                print(3)
+            default:
+                print("default")
+            }
+        }
         
+        sender.didTap = true
     }
 
     override func viewDidLoad() {
@@ -95,13 +112,33 @@ class GameVC: UIViewController {
         let gameSession = GameSession(questionCount: questions.count)
         Game.shared.gameSession = gameSession
         delegate = Game.shared.gameSession // передаю в делегат текущий gameSession
+        
+        setCustomSpacing(firstButtonGroup, space: 10)
+        setCustomSpacing(secondButtonGroup, space: 10)
+        setCustomSpacing(questionBlocksStack, space: 10)
+        setCustomSpacing(helpButtonStack, space: 5)
+        
+        for number in 0..<helpButtonStack.arrangedSubviews.count {
+            (helpButtonStack.arrangedSubviews[number] as? CustomUIButton)?.id = number + 1
+        }
+    }
+    
+    private func setCustomSpacing(_ stack: UIStackView, space: CGFloat) {
+        for itemIndex in 0..<stack.arrangedSubviews.count - 1 {
+            stack.setCustomSpacing(space, after: stack.arrangedSubviews[itemIndex])
+        }
     }
     
     func doSet(index: Int) {
-        Button1.setTitle(questions[currentQuestion].answers[0], for: .normal)
-        Button2.setTitle(questions[currentQuestion].answers[1], for: .normal)
-        Button3.setTitle(questions[currentQuestion].answers[2], for: .normal)
-        Button4.setTitle(questions[currentQuestion].answers[3], for: .normal)
+        for number in 0..<questions[index].answers.count {
+            let str = questions[index].answers[number]
+            if number < questions[index].answers.count / 2 {
+                (firstButtonGroup.arrangedSubviews[number] as? UIButton)?.setTitle(str, for: .normal)
+            } else {
+                let specialIndex = number - questions[index].answers.count / 2
+                (secondButtonGroup.arrangedSubviews[specialIndex] as? UIButton)?.setTitle(str, for: .normal)
+            }
+        }
         question.text = questions[currentQuestion].question
     }
     
