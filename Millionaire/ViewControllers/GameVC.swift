@@ -46,12 +46,18 @@ class GameVC: UIViewController {
         )
     ]
     
-    var sum = 10
+    private var duration = 2.0
+    private var width = 0
+    private var height = 0
+    private var currentShape = CAShapeLayer()
+    
+    var sum = 15625
     var currentQuestion = 0
     var delegate: GameSession?
     
     @IBOutlet var prize: UILabel!
     
+    @IBOutlet var questionNumberLabel: CustomUILabel!
     @IBOutlet var questionBlocksStack: UIStackView!
     @IBOutlet var secondButtonGroup: UIStackView!
     @IBOutlet var firstButtonGroup: UIStackView!
@@ -78,7 +84,7 @@ class GameVC: UIViewController {
     }
     
     @IBAction func checkAnswer(_ sender: UIButton) {
-        if sender.currentTitle == questions[currentQuestion].rightAnswer {
+        if currentQuestion < questions.count && sender.currentTitle == questions[currentQuestion].rightAnswer {
             delegate?.addScore()
             changeQuestion()
         } else {
@@ -121,6 +127,9 @@ class GameVC: UIViewController {
         for number in 0..<helpButtonStack.arrangedSubviews.count {
             (helpButtonStack.arrangedSubviews[number] as? CustomUIButton)?.id = number + 1
         }
+        questionNumberLabel.text = "\(currentQuestion)/\(questions.count)"
+        setAnimation()
+//        changeState(questionNumberLabel, newValue: "\(currentQuestion + 1)/\(questions.count)")
     }
     
     private func setCustomSpacing(_ stack: UIStackView, space: CGFloat) {
@@ -144,17 +153,30 @@ class GameVC: UIViewController {
     
     private func changeQuestion() {
         currentQuestion += 1
-        if prize.text == "0$" {
-            prize.text = "\(sum)$"
-        } else {
-            sum = sum*2
-            prize.text = "\(sum)$"
+        UIView.transition(
+            with: prize,
+            duration: self.duration,
+            options: [
+                .transitionFlipFromLeft
+            ]
+        ) {
+            if self.prize.text == "0$" {
+                self.prize.text = "\(self.sum)$"
+            } else {
+                self.sum = self.sum*2
+                self.prize.text = "\(self.sum)$"
+            }
+        } completion: { _ in
+            
         }
+
         
         if currentQuestion < questions.count {
+            changeState(questionNumberLabel, newValue: "\(currentQuestion)/\(questions.count)")
             doSet(index: currentQuestion)
         } else {
-            endGame()
+            changeState(questionNumberLabel, newValue: "\(currentQuestion)/\(questions.count)")
+//            endGame()
         }
     }
     
@@ -163,4 +185,160 @@ class GameVC: UIViewController {
     }
     
 
+}
+
+extension GameVC {
+    
+    
+    func setAnimation() {
+        let shape = CAShapeLayer()
+        let path = configPath()
+        
+        shape.path = path.cgPath
+        shape.lineWidth = 3
+        shape.strokeColor = UIColor.purple.cgColor
+        shape.fillColor = UIColor(displayP3Red: 1.0, green: 1.0, blue: 1.00, alpha: 0).cgColor
+        shape.strokeStart = 0.0
+        shape.strokeEnd = Double(currentQuestion + 1) / Double(questions.count)
+        
+        
+        
+        let strokeStartAnimation = CABasicAnimation(keyPath: #keyPath(CAShapeLayer.strokeStart))
+        let strokeEndAnimation = CABasicAnimation(keyPath: #keyPath(CAShapeLayer.strokeEnd))
+        
+        
+        
+        
+        
+        if currentQuestion == 0 {
+            shape.strokeEnd = 0.0
+            
+            strokeStartAnimation.fromValue = -0.1
+            strokeStartAnimation.toValue = 0.0
+            
+            strokeEndAnimation.fromValue = 0.0
+            strokeEndAnimation.toValue = 0.0
+        } else {
+            shape.strokeEnd = Double(currentQuestion) / Double(questions.count)
+            
+            strokeStartAnimation.fromValue = Double(currentQuestion - 1) / Double(questions.count) - 0.1
+            strokeStartAnimation.toValue = Double(currentQuestion) / Double(questions.count) - 0.1
+            
+            strokeEndAnimation.fromValue = Double(currentQuestion - 1) / Double(questions.count) - 0.1
+            strokeEndAnimation.toValue = Double(currentQuestion) / Double(questions.count)
+        }
+        
+        let animationGroup = CAAnimationGroup()
+        animationGroup.duration = duration
+        animationGroup.repeatCount = 1 //.infinity
+        animationGroup.animations = [
+//            strokeStartAnimation,
+            strokeEndAnimation
+        ]
+        
+        
+        shape.add(animationGroup, forKey: nil)
+//        currentShape.removeFromSuperlayer()
+        currentShape = shape
+        
+        questionNumberLabel.layer.addSublayer(currentShape)
+    }
+    
+    func configPath() -> UIBezierPath {
+        let cloudPath = UIBezierPath()
+        let widthOffset = 10
+        let startK = 0.4
+        let differenceK = 0.3
+        
+        cloudPath.move(to: CGPoint(
+            x: Int(questionNumberLabel.bounds.width * 0.5) - widthOffset,
+            y: Int(questionNumberLabel.bounds.height * (0.5 - startK))
+        ))
+        
+        cloudPath.addCurve(
+            to: CGPoint(
+                x: Int(questionNumberLabel.bounds.width * (0.5 + startK)) - widthOffset,
+                y: Int(questionNumberLabel.bounds.height * 0.5)
+            ),
+            controlPoint1: CGPoint(
+                x: Int(questionNumberLabel.bounds.width * (0.5 + differenceK)) - widthOffset,
+                y: Int(questionNumberLabel.bounds.height * (0.5 - startK))
+            ),
+            controlPoint2: CGPoint(
+                x: Int(questionNumberLabel.bounds.width * (0.5 + startK)) - widthOffset,
+                y: Int(questionNumberLabel.bounds.height * (0.5 - differenceK))
+            )
+        )
+        cloudPath.addCurve(
+            to: CGPoint(
+                x: Int(questionNumberLabel.bounds.width * 0.5) - widthOffset,
+                y: Int(questionNumberLabel.bounds.height * (0.5 + startK))
+            ),
+            controlPoint1: CGPoint(
+                x: Int(questionNumberLabel.bounds.width * (0.5 + startK)) - widthOffset,
+                y: Int(questionNumberLabel.bounds.height * (0.5 + differenceK))
+            ),
+            controlPoint2: CGPoint(
+                x: Int(questionNumberLabel.bounds.width * (0.5 + differenceK)) - widthOffset,
+                y: Int(questionNumberLabel.bounds.height * (0.5 + startK))
+            )
+        )
+        cloudPath.addCurve(
+            to: CGPoint(
+                x: Int(questionNumberLabel.bounds.width * (0.5 - startK)) - widthOffset,
+                y: Int(questionNumberLabel.bounds.height * 0.5)
+            ),
+            controlPoint1: CGPoint(
+                x: Int(questionNumberLabel.bounds.width * (0.5 - differenceK)) - widthOffset,
+                y: Int(questionNumberLabel.bounds.height * (0.5 + startK))
+            ),
+            controlPoint2: CGPoint(
+                x: Int(questionNumberLabel.bounds.width * (0.5 - startK)) - widthOffset,
+                y: Int(questionNumberLabel.bounds.height * (0.5 + differenceK))
+            )
+        )
+        
+        cloudPath.addCurve(
+            to: CGPoint(
+                x: Int(questionNumberLabel.bounds.width * 0.5) - widthOffset,
+                y: Int(questionNumberLabel.bounds.height * (0.5 - startK))
+            ),
+            controlPoint1: CGPoint(
+                x: Int(questionNumberLabel.bounds.width * (0.5 - startK)) - widthOffset,
+                y: Int(questionNumberLabel.bounds.height * (0.5 - differenceK))
+            ),
+            controlPoint2: CGPoint(
+                x: Int(questionNumberLabel.bounds.width * (0.5 - differenceK)) - widthOffset,
+                y: Int(questionNumberLabel.bounds.height * (0.5 - startK))
+            )
+        )
+    
+        cloudPath.move(to: CGPoint(
+            x: Int(questionNumberLabel.bounds.width * 0.5) - widthOffset,
+            y: Int(questionNumberLabel.bounds.height * (0.5 - startK))
+        ))
+        
+        cloudPath.close()
+        return cloudPath
+    }
+    
+    func changeState(_ sender: UILabel, newValue: String) {
+        UIView.transition(
+            with: sender,
+            duration: duration,
+            options: [
+                .transitionFlipFromBottom
+            ]
+        ){
+            sender.text = newValue
+        } completion: { _ in
+            if self.currentQuestion == self.questions.count {
+                DispatchQueue.main.asyncAfter(deadline: .now() + self.duration / 2) {
+                    self.endGame()
+                }
+                
+            }
+        }
+        setAnimation()
+    }
 }
