@@ -8,51 +8,20 @@
 import UIKit
 
 class GameVC: UIViewController {
-    private var questions: [Question] = [
-        Question(
-            answers: ["Фиолетовый", "Синий", "Зеленый", "Красный"],
-            rightAnswer: "Зеленый",
-            question: "Какого цвета Ёлка?"
-        ),
-        Question(
-            answers: ["3", "7", "9", "5"],
-            rightAnswer: "7",
-            question: "Сколько цветов у радуги?"
-        ),
-        Question(
-            answers: ["A", "B", "C", "D"],
-            rightAnswer: "C",
-            question: "Какой из витаминов преобладает в лимоне?"
-        ),
-        Question(
-            answers: ["1963", "1961", "1965", "1964"],
-            rightAnswer: "1961",
-            question: "В каком году Юрий Гагарин полетел в космос?"
-        ),
-        Question(
-            answers: ["Ургант", "Фейнман", "Эйнштейн", "Перельман"],
-            rightAnswer: "Перельман",
-            question: "Кто доказал гипотезу Пуанкаре?"
-        ),
-        Question(
-            answers: ["Эйлера", "Гильберта", "Лапласа", "Фурье"],
-            rightAnswer: "Фурье",
-            question: "Какое преобразование используют для спектрального разложения сигнала во времени?"
-        ),
-        Question(
-            answers: ["Юнг", "Гегель", "Ницше", "Шопенгауэр"],
-            rightAnswer: "Ницше",
-            question: "Кто из этих философов в 1864 году написал музыку на стихи А.С. Пушкина «Заклинание» и «Зимний вечер»?"
-        )
-    ]
     
-    private var duration = 2.0
+    private var questionsSequence: SequenceQuestions =
+    Game.shared.randomOrderOfQuestions ? RandomOrderQuestions() : DirectOrderQuestions()
+    
+    private var questions: [Question]?
+    
+    private var duration = 1.5
     private var width = 0
     private var height = 0
     private var currentShape = CAShapeLayer()
     
-    var sum = 15625
-    var currentQuestion = 0
+    var sum = Observable<Double>(0)
+    var startSum: Double = 15625
+    var currentQuestion = Observable<Int>(0)
     var delegate: GameSession?
     
     @IBOutlet var prize: UILabel!
@@ -68,9 +37,6 @@ class GameVC: UIViewController {
     @IBOutlet var question: UILabel!
     @IBOutlet var endGameButton: UIBarButtonItem!
     
-    
-    
-    
     @IBAction func endGameBarButtonAction(_ sender: Any) {
         let record = Record(
             result: round(Double(delegate?.rightAnswers ?? 0) / Double(delegate?.questionCount ?? 0) * 100),
@@ -84,7 +50,10 @@ class GameVC: UIViewController {
     }
     
     @IBAction func checkAnswer(_ sender: UIButton) {
-        if currentQuestion < questions.count && sender.currentTitle == questions[currentQuestion].rightAnswer {
+        guard
+            let questions = questions
+        else { return }
+        if currentQuestion.value < questions.count && sender.currentTitle == questions[currentQuestion.value].rightAnswer {
             delegate?.addScore()
             changeQuestion()
         } else {
@@ -97,8 +66,8 @@ class GameVC: UIViewController {
         if (!sender.didTap) {
             switch sender.id {
             case 1:
-                questions[currentQuestion].removeTwoIncorrectAnswer()
-                doSet(index: currentQuestion)
+                questions?[currentQuestion.value].removeTwoIncorrectAnswer()
+                doSet(index: currentQuestion.value)
                 Game.shared.gameSession?.didRemoveTwoIncorrectAnswer = true
             case 2:
                 print(2)
@@ -111,11 +80,15 @@ class GameVC: UIViewController {
         
         sender.didTap = true
     }
+    
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        doSet(index: currentQuestion)
-        let gameSession = GameSession(questionCount: questions.count)
+        setObservers()
+        
+        questions = questionsSequence.getQuestions()
+        doSet(index: currentQuestion.value)
+        let gameSession = GameSession(questionCount: questions?.count ?? 0)
         Game.shared.gameSession = gameSession
         delegate = Game.shared.gameSession // передаю в делегат текущий gameSession
         
@@ -127,9 +100,43 @@ class GameVC: UIViewController {
         for number in 0..<helpButtonStack.arrangedSubviews.count {
             (helpButtonStack.arrangedSubviews[number] as? CustomUIButton)?.id = number + 1
         }
-        questionNumberLabel.text = "\(currentQuestion)/\(questions.count)"
+        questionNumberLabel.text = "\(currentQuestion.value)/\(questions?.count ?? 0)"
         setAnimation()
-//        changeState(questionNumberLabel, newValue: "\(currentQuestion + 1)/\(questions.count)")
+    }
+    
+    private func setObservers() {
+        sum.addObserver(
+            self,
+            options: [.new]
+        ) {
+            [weak self] sum, _ in
+            guard let self = self else { return }
+            UIView.transition(
+                with: self.prize,
+                duration: self.duration,
+                options: [
+                    .transitionFlipFromBottom
+                ]
+            ) {
+                self.prize.text = "\(self.sum.value)$"
+                if self.sum.value == 0 {
+                    self.sum.value = self.startSum
+                }
+            }
+        }
+        
+        currentQuestion.addObserver(
+            self,
+            options: [.new]
+        ) {
+            [weak self] sum, _ in
+            guard
+                let self = self,
+                let count = self.questions?.count
+            else { return }
+            Game.shared.gameSession?.percentRightAnswer = Double(self.currentQuestion.value) / Double(count)
+            Game.shared.gameSession?.currentQuestion = self.currentQuestion.value
+        }
     }
     
     private func setCustomSpacing(_ stack: UIStackView, space: CGFloat) {
@@ -139,6 +146,10 @@ class GameVC: UIViewController {
     }
     
     func doSet(index: Int) {
+        guard
+            let questions = questions
+        else { return }
+
         for number in 0..<questions[index].answers.count {
             let str = questions[index].answers[number]
             if number < questions[index].answers.count / 2 {
@@ -148,35 +159,21 @@ class GameVC: UIViewController {
                 (secondButtonGroup.arrangedSubviews[specialIndex] as? UIButton)?.setTitle(str, for: .normal)
             }
         }
-        question.text = questions[currentQuestion].question
+        question.text = "\(currentQuestion.value + 1). \(questions[currentQuestion.value].question)"
     }
     
     private func changeQuestion() {
-        currentQuestion += 1
-        UIView.transition(
-            with: prize,
-            duration: self.duration,
-            options: [
-                .transitionFlipFromLeft
-            ]
-        ) {
-            if self.prize.text == "0$" {
-                self.prize.text = "\(self.sum)$"
-            } else {
-                self.sum = self.sum*2
-                self.prize.text = "\(self.sum)$"
-            }
-        } completion: { _ in
-            
-        }
-
+        guard
+            let questions = questions
+        else { return }
+        currentQuestion.value += 1
+        self.sum.value = self.sum.value * 2
         
-        if currentQuestion < questions.count {
-            changeState(questionNumberLabel, newValue: "\(currentQuestion)/\(questions.count)")
-            doSet(index: currentQuestion)
+        if currentQuestion.value < questions.count {
+            changeState(questionNumberLabel, newValue: "\(currentQuestion.value)/\(questions.count)")
+            doSet(index: currentQuestion.value)
         } else {
-            changeState(questionNumberLabel, newValue: "\(currentQuestion)/\(questions.count)")
-//            endGame()
+            changeState(questionNumberLabel, newValue: "\(currentQuestion.value)/\(questions.count)")
         }
     }
     
@@ -188,9 +185,10 @@ class GameVC: UIViewController {
 }
 
 extension GameVC {
-    
-    
     func setAnimation() {
+        guard
+            let questions = questions
+        else { return }
         let shape = CAShapeLayer()
         let path = configPath()
         
@@ -199,18 +197,14 @@ extension GameVC {
         shape.strokeColor = UIColor.purple.cgColor
         shape.fillColor = UIColor(displayP3Red: 1.0, green: 1.0, blue: 1.00, alpha: 0).cgColor
         shape.strokeStart = 0.0
-        shape.strokeEnd = Double(currentQuestion + 1) / Double(questions.count)
+        shape.strokeEnd = Double(currentQuestion.value + 1) / Double(questions.count)
         
         
         
         let strokeStartAnimation = CABasicAnimation(keyPath: #keyPath(CAShapeLayer.strokeStart))
         let strokeEndAnimation = CABasicAnimation(keyPath: #keyPath(CAShapeLayer.strokeEnd))
         
-        
-        
-        
-        
-        if currentQuestion == 0 {
+        if currentQuestion.value == 0 {
             shape.strokeEnd = 0.0
             
             strokeStartAnimation.fromValue = -0.1
@@ -219,13 +213,13 @@ extension GameVC {
             strokeEndAnimation.fromValue = 0.0
             strokeEndAnimation.toValue = 0.0
         } else {
-            shape.strokeEnd = Double(currentQuestion) / Double(questions.count)
+            shape.strokeEnd = Double(currentQuestion.value) / Double(questions.count)
             
-            strokeStartAnimation.fromValue = Double(currentQuestion - 1) / Double(questions.count) - 0.1
-            strokeStartAnimation.toValue = Double(currentQuestion) / Double(questions.count) - 0.1
+            strokeStartAnimation.fromValue = Double(currentQuestion.value - 1) / Double(questions.count) - 0.1
+            strokeStartAnimation.toValue = Double(currentQuestion.value) / Double(questions.count) - 0.1
             
-            strokeEndAnimation.fromValue = Double(currentQuestion - 1) / Double(questions.count) - 0.1
-            strokeEndAnimation.toValue = Double(currentQuestion) / Double(questions.count)
+            strokeEndAnimation.fromValue = Double(currentQuestion.value - 1) / Double(questions.count) - 0.1
+            strokeEndAnimation.toValue = Double(currentQuestion.value) / Double(questions.count)
         }
         
         let animationGroup = CAAnimationGroup()
@@ -238,7 +232,6 @@ extension GameVC {
         
         
         shape.add(animationGroup, forKey: nil)
-//        currentShape.removeFromSuperlayer()
         currentShape = shape
         
         questionNumberLabel.layer.addSublayer(currentShape)
@@ -323,22 +316,24 @@ extension GameVC {
     }
     
     func changeState(_ sender: UILabel, newValue: String) {
+        guard
+            let questions = questions
+        else { return }
+        setAnimation()
         UIView.transition(
             with: sender,
             duration: duration,
             options: [
-                .transitionFlipFromBottom
+                .transitionCrossDissolve
             ]
         ){
             sender.text = newValue
         } completion: { _ in
-            if self.currentQuestion == self.questions.count {
-                DispatchQueue.main.asyncAfter(deadline: .now() + self.duration / 2) {
+            if self.currentQuestion.value == questions.count {
+                DispatchQueue.main.asyncAfter(deadline: .now() + self.duration) {
                     self.endGame()
                 }
-                
             }
         }
-        setAnimation()
     }
 }

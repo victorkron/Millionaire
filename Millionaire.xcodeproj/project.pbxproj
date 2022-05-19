@@ -22,6 +22,9 @@
 		6C87B35228303D120029BA62 /* RecordsCaretaker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C87B35128303D120029BA62 /* RecordsCaretaker.swift */; };
 		6C87B35B2835B7110029BA62 /* CustomUILabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C87B35A2835B7110029BA62 /* CustomUILabel.swift */; };
 		6C87B35D2835B7270029BA62 /* CustomUIButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C87B35C2835B7270029BA62 /* CustomUIButton.swift */; };
+		6C87B36128369EFD0029BA62 /* SettingVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C87B36028369EFD0029BA62 /* SettingVC.swift */; };
+		6C87B3632836A66E0029BA62 /* RandomQuestionStrategy.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C87B3622836A66E0029BA62 /* RandomQuestionStrategy.swift */; };
+		6C87B3652836AE950029BA62 /* Observer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C87B3642836AE950029BA62 /* Observer.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -42,6 +45,9 @@
 		6C87B35128303D120029BA62 /* RecordsCaretaker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordsCaretaker.swift; sourceTree = "<group>"; };
 		6C87B35A2835B7110029BA62 /* CustomUILabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomUILabel.swift; sourceTree = "<group>"; };
 		6C87B35C2835B7270029BA62 /* CustomUIButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomUIButton.swift; sourceTree = "<group>"; };
+		6C87B36028369EFD0029BA62 /* SettingVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingVC.swift; sourceTree = "<group>"; };
+		6C87B3622836A66E0029BA62 /* RandomQuestionStrategy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RandomQuestionStrategy.swift; sourceTree = "<group>"; };
+		6C87B3642836AE950029BA62 /* Observer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Observer.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -103,6 +109,7 @@
 				6C87B32C282F94170029BA62 /* StartViewController.swift */,
 				6C87B345282F9D030029BA62 /* GameVC.swift */,
 				6C87B347282F9D100029BA62 /* RecordsVC.swift */,
+				6C87B36028369EFD0029BA62 /* SettingVC.swift */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
@@ -129,6 +136,8 @@
 				6C87B35128303D120029BA62 /* RecordsCaretaker.swift */,
 				6C87B34C282FF9470029BA62 /* Game.swift */,
 				6C87B34E282FF9A20029BA62 /* GameSession.swift */,
+				6C87B3622836A66E0029BA62 /* RandomQuestionStrategy.swift */,
+				6C87B3642836AE950029BA62 /* Observer.swift */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -214,6 +223,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				6C87B32D282F94170029BA62 /* StartViewController.swift in Sources */,
+				6C87B3652836AE950029BA62 /* Observer.swift in Sources */,
 				6C87B35B2835B7110029BA62 /* CustomUILabel.swift in Sources */,
 				6C87B329282F94170029BA62 /* AppDelegate.swift in Sources */,
 				6C87B35D2835B7270029BA62 /* CustomUIButton.swift in Sources */,
@@ -222,9 +232,11 @@
 				6C87B346282F9D030029BA62 /* GameVC.swift in Sources */,
 				6C87B34B282FABD30029BA62 /* Question.swift in Sources */,
 				6C87B32B282F94170029BA62 /* SceneDelegate.swift in Sources */,
+				6C87B3632836A66E0029BA62 /* RandomQuestionStrategy.swift in Sources */,
 				6C87B34F282FF9A20029BA62 /* GameSession.swift in Sources */,
 				6C87B34D282FF9470029BA62 /* Game.swift in Sources */,
 				6C87B35228303D120029BA62 /* RecordsCaretaker.swift in Sources */,
+				6C87B36128369EFD0029BA62 /* SettingVC.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

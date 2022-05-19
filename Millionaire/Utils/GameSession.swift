@@ -12,6 +12,8 @@ class GameSession {
     var questionCount: Int
     var rightAnswers: Int = 0
     var didRemoveTwoIncorrectAnswer: Bool = false
+    var percentRightAnswer: Double?
+    var currentQuestion: Int?
     
     
     init(questionCount: Int) {
