@@ -10,12 +10,16 @@ import UIKit
 class StartViewController: UIViewController {
 
     private let recordsCaretaker = RecordsCaretaker()
+    private let questionsCaretaker = QuestionsCaretaker()
     
     @IBOutlet var stackView: UIStackView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         Game.shared.results = recordsCaretaker.receiveRecords()
+        questionsCaretaker.receiveQuestions().forEach { question in
+            Game.shared.questions.append(question)
+        }
         setCustomSpacing(stackView, space: 20)
     }
     

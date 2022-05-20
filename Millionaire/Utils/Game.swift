@@ -12,6 +12,7 @@ class Game {
     private let recordsCaretaker = RecordsCaretaker()
     
     
+    
     var results: [Record] = [] {
         didSet {
             recordsCaretaker.save(records: results)

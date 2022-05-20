@@ -117,17 +117,58 @@
             </objects>
             <point key="canvasLocation" x="1855.072463768116" y="97.767857142857139"/>
         </scene>
-        <!--View Controller-->
+        <!--Add New QuestionsVC-->
         <scene sceneID="JVc-ub-JGW">
             <objects>
-                <viewController id="Tkd-yT-MwT" sceneMemberID="viewController">
+                <viewController id="Tkd-yT-MwT" customClass="AddNewQuestionsVC" customModule="Millionaire" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="Aq5-o1-sbH">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="insetGrouped" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="18" estimatedSectionHeaderHeight="-1" sectionFooterHeight="18" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="C3S-3e-qRP">
+                                <rect key="frame" x="0.0" y="88" width="414" height="774"/>
+                            </tableView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="T51-pQ-gvy" customClass="CustomUIButton" customModule="Millionaire" customModuleProvider="target">
+                                <rect key="frame" x="10" y="822" width="394" height="40"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="40" id="7cr-If-bKa"/>
+                                </constraints>
+                                <state key="normal" title="Button"/>
+                                <buttonConfiguration key="configuration" style="plain" title="Добавить вопрос">
+                                    <attributedString key="attributedSubtitle"/>
+                                </buttonConfiguration>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="color" keyPath="textColor">
+                                        <color key="value" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                    </userDefinedRuntimeAttribute>
+                                    <userDefinedRuntimeAttribute type="color" keyPath="layerBackgroundColor">
+                                        <color key="value" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                    </userDefinedRuntimeAttribute>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                        <real key="value" value="10"/>
+                                    </userDefinedRuntimeAttribute>
+                                </userDefinedRuntimeAttributes>
+                                <connections>
+                                    <action selector="addQuestion:" destination="Tkd-yT-MwT" eventType="touchUpInside" id="Z6c-jk-rZi"/>
+                                </connections>
+                            </button>
+                        </subviews>
                         <viewLayoutGuide key="safeArea" id="2K7-Gb-ypa"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="C3S-3e-qRP" firstAttribute="top" secondItem="2K7-Gb-ypa" secondAttribute="top" id="QzE-6T-YB4"/>
+                            <constraint firstItem="2K7-Gb-ypa" firstAttribute="trailing" secondItem="T51-pQ-gvy" secondAttribute="trailing" constant="10" id="Z6G-0N-mYw"/>
+                            <constraint firstItem="T51-pQ-gvy" firstAttribute="leading" secondItem="2K7-Gb-ypa" secondAttribute="leading" constant="10" id="bV5-rs-Vqr"/>
+                            <constraint firstItem="2K7-Gb-ypa" firstAttribute="bottom" secondItem="T51-pQ-gvy" secondAttribute="bottom" id="gXP-t7-Qik"/>
+                            <constraint firstItem="C3S-3e-qRP" firstAttribute="leading" secondItem="2K7-Gb-ypa" secondAttribute="leading" id="mbv-PT-qjA"/>
+                            <constraint firstItem="2K7-Gb-ypa" firstAttribute="bottom" secondItem="C3S-3e-qRP" secondAttribute="bottom" id="vNC-dV-sUa"/>
+                            <constraint firstItem="2K7-Gb-ypa" firstAttribute="trailing" secondItem="C3S-3e-qRP" secondAttribute="trailing" id="xw4-SR-wph"/>
+                        </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="abQ-k7-l5p"/>
+                    <connections>
+                        <outlet property="tableView" destination="C3S-3e-qRP" id="oCp-3X-mHb"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="2H8-le-TNz" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
